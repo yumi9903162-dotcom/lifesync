@@ -1,6 +1,9 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>LifeSync — 개인 일정 관리 프로토타입</title>
 <style>
   :root{
+    color-scheme:light;
     --ground:#efeaf3; --surface:#ffffff; --surface-2:#ffffff; --surface-sunk:#f5f1f8;
     --border:#ebe6ee; --border-strong:#dad0e2;
     --text:#250835; --text-2:#473054; --text-3:#6a5b72;
@@ -14,6 +17,7 @@
   }
   @media (prefers-color-scheme:dark){
     :root{
+      color-scheme:dark;
       --ground:#140a1d; --surface:#1d1029; --surface-2:#261634; --surface-sunk:#140a1d;
       --border:#38294a; --border-strong:#4b3a60;
       --text:#f2ecf7; --text-2:#c9bbd6; --text-3:#9585a6;
@@ -24,6 +28,7 @@
     }
   }
   :root[data-theme="light"]{
+    color-scheme:light;
     --ground:#efeaf3; --surface:#ffffff; --surface-2:#ffffff; --surface-sunk:#f5f1f8;
     --border:#ebe6ee; --border-strong:#dad0e2;
     --text:#250835; --text-2:#473054; --text-3:#6a5b72;
@@ -33,6 +38,7 @@
     --shadow:0 1px 2px rgba(37,8,53,.05),0 16px 32px rgba(37,8,53,.08);
   }
   :root[data-theme="dark"]{
+    color-scheme:dark;
     --ground:#140a1d; --surface:#1d1029; --surface-2:#261634; --surface-sunk:#140a1d;
     --border:#38294a; --border-strong:#4b3a60;
     --text:#f2ecf7; --text-2:#c9bbd6; --text-3:#9585a6;
@@ -49,10 +55,11 @@
   input,textarea,select{font-family:inherit}
   ::selection{background:var(--accent-soft)}
 
-  .app{max-width:520px;margin:0 auto;min-height:100dvh;background:var(--surface);display:flex;flex-direction:column;position:relative;border-left:1px solid var(--border);border-right:1px solid var(--border);}
-  @media (max-width:520px){ .app{border-left:none;border-right:none} }
+  /* 반응형: 아이폰17·아이패드미니5 = 화면 꽉 채움, 데스크톱(>1024) = 가운데 프레임 */
+  .app{width:100%;margin:0 auto;min-height:100dvh;background:var(--surface);display:flex;flex-direction:column;position:relative}
+  @media (min-width:1025px){ .app{max-width:560px;border-left:1px solid var(--border);border-right:1px solid var(--border)} }
 
-  .topbar{flex:0 0 auto;position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--border);padding:14px 18px 10px;}
+  .topbar{flex:0 0 auto;position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--border);padding:calc(14px + env(safe-area-inset-top)) 18px 10px;}
   .topbar .brand{display:flex;align-items:center;justify-content:space-between}
   .brand .logo{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-2);letter-spacing:.02em}
   .brand .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
@@ -281,11 +288,12 @@
   .glabel span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-align:center;line-height:1.05;word-break:keep-all}
   .glabel.main{font-size:4.6px;font-weight:800}
   .glabel.sub{font-size:3px;font-weight:700}
-  .glabel.act{font-size:2px;font-weight:500;color:var(--text-2)}
+  .gtext{font-size:2.4px;font-weight:600;fill:var(--text-2);font-family:var(--font)}
+  .gtext.done{fill:var(--done)}
   /* 목표 상세 패널 */
   #goalDetail{max-width:560px;margin:14px auto 0}
   #goalDetail:empty{display:none}
-  .gd-head{display:flex;align-items:flex-start;gap:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:14px 15px}
+  .gd-head{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:14px 15px}
   .gd-kind{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--accent);text-transform:uppercase}
   .gd-badge{color:var(--done);margin-left:4px}
   .gd-title{font-size:17px;font-weight:800;color:var(--text);margin-top:3px;line-height:1.3;word-break:keep-all}
@@ -310,8 +318,8 @@
   .gd-item-m{font-size:11.5px;color:var(--text-3);margin-top:1px}
   .gd-type{flex:0 0 auto;font-size:10.5px;font-weight:700;color:var(--text-3);background:var(--surface-3,var(--wash,#efe4fc));padding:2px 7px;border-radius:6px}
 
-  .fab{position:fixed;right:calc(50% - 260px + 18px);bottom:calc(78px + env(safe-area-inset-bottom));z-index:40;width:54px;height:54px;border-radius:17px;background:var(--accent);color:#fff;border:0;display:grid;place-items:center;box-shadow:0 8px 22px rgba(171,47,237,.42);transition:.15s}
-  @media (max-width:520px){ .fab{right:18px} }
+  .fab{position:fixed;right:18px;bottom:calc(78px + env(safe-area-inset-bottom));z-index:40;width:54px;height:54px;border-radius:17px;background:var(--accent);color:#fff;border:0;display:grid;place-items:center;box-shadow:0 8px 22px rgba(171,47,237,.42);transition:.15s}
+  @media (min-width:1025px){ .fab{right:calc(50% - 280px + 18px)} }
   .fab:hover{transform:translateY(-2px)}
   .fab svg{width:26px;height:26px}
 
@@ -1608,11 +1616,25 @@
       poly.setAttribute("class","gtri "+n.level+(n.data.done?" done":"")+(refStr(n.ref)===ui.goalSel?" sel":""));
       poly.addEventListener("click",function(){ui.goalSel=refStr(n.ref);if(!n.data.t){openGoalSheet(n.ref);}renderGoal();});
       el.appendChild(poly);
-      var c=cen(n.tri), w=(n.level==="main"?30:n.level==="sub"?16:13), h=(n.level==="main"?20:n.level==="sub"?13:12), oy=(n.level==="act"?2:0);
-      var fo=document.createElementNS(NS,"foreignObject");
-      fo.setAttribute("x",c[0]-w/2); fo.setAttribute("y",c[1]-h/2+oy); fo.setAttribute("width",w); fo.setAttribute("height",h); fo.setAttribute("pointer-events","none");
-      var div=document.createElement("div"); div.className="glabel "+n.level; div.innerHTML='<span>'+esc(n.data.t||"")+'</span>';
-      fo.appendChild(div); el.appendChild(fo);
+      // 라벨 박스를 삼각형 안쪽(아래 넓은 쪽)에 맞춰 배치 — 실행 항목도 글자 표시
+      if(n.level==="act"){
+        // 실행 항목: SVG 텍스트(벡터)로 선명하게 1줄 · 길면 … 로 자름
+        var cc=cen(n.tri);
+        var raw=(n.data.t||""); var disp=(raw.length>6?raw.slice(0,5)+"…":raw);
+        var tx=document.createElementNS(NS,"text");
+        tx.setAttribute("x",cc[0]); tx.setAttribute("y",cc[1]+1.4);
+        tx.setAttribute("text-anchor","middle"); tx.setAttribute("dominant-baseline","central");
+        tx.setAttribute("class","gtext"+(n.data.done?" done":"")); tx.setAttribute("pointer-events","none");
+        tx.textContent=disp;
+        el.appendChild(tx);
+      }else{
+        var c=cen(n.tri);
+        var w=(n.level==="main"?30:17), h=(n.level==="main"?20:14), oy=(n.level==="main"?0:-1);
+        var fo=document.createElementNS(NS,"foreignObject");
+        fo.setAttribute("x",c[0]-w/2); fo.setAttribute("y",c[1]-h/2+oy); fo.setAttribute("width",w); fo.setAttribute("height",h); fo.setAttribute("pointer-events","none");
+        var div=document.createElement("div"); div.className="glabel "+n.level; div.innerHTML='<span>'+esc(n.data.t||"")+'</span>';
+        fo.appendChild(div); el.appendChild(fo);
+      }
     });
     renderGoalDetail();
     document.getElementById("viewTitle").textContent="Goal";
