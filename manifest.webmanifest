@@ -1,0 +1,20 @@
+{
+  "name": "LifeSync",
+  "short_name": "LifeSync",
+  "description": "캘린더, 할 일, 목표, 습관과 아카이브를 한곳에서 관리합니다.",
+  "lang": "ko-KR",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4f1fa",
+  "theme_color": "#7c3aed",
+  "icons": [
+    {
+      "src": "./assets/lifesync-calendar-link-icon.png",
+      "sizes": "1280x1280",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
