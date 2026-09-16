@@ -1142,6 +1142,65 @@ button{transition:background-color .14s ease,border-color .14s ease,color .14s e
 .block:hover .time-resize::after,.block.resizing .time-resize::after{opacity:1;width:38px}.block.resizing{opacity:.82;z-index:13}
 .tl-grid{cursor:crosshair}.tl-grid .block{cursor:grab}
 @media(max-width:650px){#goalWrap{margin:-18px auto 0!important;max-width:400px!important}#goalSvg{height:clamp(210px,30vh,285px)!important}#goalDetail .gd-head{padding:10px 12px!important}#goalDetail .gd-item{padding:8px 9px!important}.time-resize{height:14px;bottom:0}}
+/* 로그인 페이지: 간결한 앱 아이콘과 중앙 카드 */
+.logingate{
+  isolation:isolate;
+  padding:clamp(16px,4vw,40px)!important;
+  overflow-y:auto;
+  background:
+    radial-gradient(circle at 12% 8%,rgba(139,92,246,.42) 0,rgba(139,92,246,.18) 24%,transparent 48%),
+    radial-gradient(circle at 88% 90%,rgba(56,189,248,.38) 0,rgba(96,165,250,.16) 26%,transparent 50%),
+    linear-gradient(145deg,#eee7ff 0%,#faf8ff 50%,#e4f3ff 100%)!important;
+}
+.logingate::before,.logingate::after{
+  display:none!important
+}
+.logingate::before{width:190px;height:190px;left:-92px;top:-76px}
+.logingate::after{width:150px;height:150px;right:-76px;bottom:-62px}
+.lg-card{
+  width:min(100%,390px)!important;
+  max-width:390px!important;
+  min-height:0;
+  margin:auto!important;
+  padding:clamp(28px,5vw,42px) clamp(22px,5vw,36px)!important;
+  border:1px solid rgba(124,58,237,.1)!important;
+  border-radius:32px!important;
+  background:rgba(255,255,255,.96)!important;
+  box-shadow:0 22px 55px -38px rgba(55,25,110,.5)!important;
+  text-align:left!important;
+  overflow:visible!important;
+}
+.lg-brand{display:flex;flex-direction:column;align-items:center;margin:0 0 26px;text-align:center}
+.lg-logo{display:flex!important;flex-direction:column;align-items:center;gap:10px;margin:0!important;color:#4c1d95!important;font-size:15px!important;font-weight:800}
+.lg-logo img{display:block;width:76px;height:76px;border-radius:22px;object-fit:cover}
+.lg-h{margin-top:18px;text-align:center;font-size:clamp(24px,6vw,29px)!important;line-height:1.15;color:#2d2440!important}
+.lg-sub{display:none!important}
+.lg-google{min-height:50px;margin-top:0!important;border:1px solid #ddd6fe!important;border-radius:999px!important;background:#f8f6ff!important;box-shadow:none!important;color:#332a42!important}
+.lg-google:hover{background:#f1edff!important;border-color:#c4b5fd!important}
+#lgEmailWrap{margin-top:0!important}
+.lg-field{margin-bottom:14px}
+.lg-field>label{margin-left:12px!important;color:#685d79!important}
+.lg-field input{height:52px!important;padding-inline:18px!important;border:1px solid transparent!important;border-radius:999px!important;background:linear-gradient(90deg,#e0f2fe,#f3e8ff)!important;box-shadow:none!important;color:#292238!important}
+.lg-field input:focus{border-color:#8b5cf6!important;box-shadow:0 0 0 3px rgba(139,92,246,.14)!important}
+.lg-pw-toggle{right:10px;background:rgba(255,255,255,.74)!important;color:#6d28d9!important}
+.lg-remember{margin:2px 8px 18px!important;color:#5f566d!important}
+.lg-actions{display:flex!important;flex-direction:column;align-items:center;gap:8px!important}
+.lg-actions #lgSignin{min-height:50px!important;border-radius:999px!important;background:linear-gradient(90deg,#8b5cf6,#7c3aed)!important;box-shadow:none!important}
+.lg-actions #lgSignup{width:auto!important;min-width:86px!important;min-height:34px!important;color:#6d28d9!important;text-decoration:underline;text-underline-offset:3px}
+.lg-note{display:block;margin:12px 4px 0!important;padding:9px 11px!important;border-radius:12px!important;background:#f5f3ff!important;color:#625673!important;text-align:center!important}
+.lg-note:empty{display:none!important}
+:root[data-theme="dark"] .logingate{background:radial-gradient(circle at 14% 8%,rgba(124,58,237,.35),transparent 45%),radial-gradient(circle at 88% 90%,rgba(37,99,235,.28),transparent 48%),linear-gradient(145deg,#21172f,#16131d 52%,#15233a)!important}
+:root[data-theme="dark"] .lg-card{background:#211a2b!important;border-color:rgba(196,181,253,.2)!important;box-shadow:0 22px 55px -38px rgba(0,0,0,.9)!important}
+:root[data-theme="dark"] .lg-h{color:#f7f3ff!important}
+:root[data-theme="dark"] .lg-logo{color:#ddd6fe!important}
+:root[data-theme="dark"] .lg-field input{background:linear-gradient(90deg,#17223a,#2b1d3f)!important;color:#fff!important}
+:root[data-theme="dark"] .lg-google{background:#2b2237!important;border-color:#4b3a61!important;color:#fff!important}
+@media(max-width:480px){
+  .logingate{padding:14px!important;background:radial-gradient(circle at 10% 6%,rgba(139,92,246,.38),transparent 44%),radial-gradient(circle at 92% 94%,rgba(56,189,248,.34),transparent 46%),linear-gradient(150deg,#eee7ff,#faf8ff 52%,#e4f3ff)!important}
+  .lg-card{width:100%!important;max-width:370px!important;padding:28px 20px!important;border-radius:28px!important}
+  .lg-brand{margin-bottom:22px}.lg-logo img{width:68px;height:68px;border-radius:20px}.lg-h{margin-top:15px!important}
+}
+@media(max-height:660px){.logingate{align-items:flex-start!important}.lg-card{margin-block:auto!important;padding-block:24px!important}.lg-brand{margin-bottom:18px}.lg-logo img{width:58px;height:58px;border-radius:17px}.lg-h{margin-top:12px!important;font-size:23px!important}.lg-field input{height:48px!important}.lg-actions #lgSignin{min-height:47px!important}}
 </style>
 <div class="clay-blobs" aria-hidden="true"><span class="cb cb1"></span><span class="cb cb2"></span><span class="cb cb3"></span></div>
 
@@ -1297,10 +1356,11 @@ button{transition:background-color .14s ease,border-color .14s ease,color .14s e
 <div class="toast" id="toast"></div>
 
 <div class="logingate" id="loginGate">
-  <div class="lg-card" role="dialog" aria-labelledby="loginTitle" aria-describedby="loginDesc">
-    <div class="lg-logo"><span class="dot"></span> LifeSync</div>
-    <div class="lg-h" id="loginTitle">모든 기기에서 이어서</div>
-    <div class="lg-sub" id="loginDesc">로그인하면 캘린더·투두·목표·습관·아카이브가 iPhone·iPad·PC에서 같은 계정으로 동기화됩니다.</div>
+  <div class="lg-card" role="dialog" aria-labelledby="loginTitle">
+    <div class="lg-brand">
+      <div class="lg-logo"><img src="assets/lifesync-calendar-link-icon.png" alt=""><span>LifeSync</span></div>
+      <div class="lg-h" id="loginTitle">로그인</div>
+    </div>
     <button type="button" class="lg-google" id="lgGoogle"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Google로 계속하기</button>
     <div id="lgEmailWrap" style="display:none">
       <div class="lg-field"><label for="lgEmail">이메일</label><input id="lgEmail" type="email" maxlength="254" placeholder="name@example.com" autocomplete="email" inputmode="email"></div>
@@ -1311,7 +1371,7 @@ button{transition:background-color .14s ease,border-color .14s ease,color .14s e
         <button type="button" class="lg-google" id="lgSignup">가입</button>
       </div>
     </div>
-    <div class="lg-note" id="lgNote" aria-live="polite">데모 로그인입니다. 실제 로그인·기기 간 동기화는 Supabase 키를 넣으면 켜집니다.</div>
+    <div class="lg-note" id="lgNote" aria-live="polite"></div>
   </div>
 </div>
 
@@ -2807,8 +2867,8 @@ button{transition:background-color .14s ease,border-color .14s ease,color .14s e
   function showLogin(){
     restoreRememberedEmail();
     var g=document.getElementById("lgGoogle"), ew=document.getElementById("lgEmailWrap"), note=document.getElementById("lgNote");
-    if(SUPA_ON){g.style.display="none";ew.style.display="";note.textContent="처음이면 이메일·비밀번호 넣고 [가입], 그다음부터 [로그인]. 같은 이메일로 어느 기기서든 데이터가 이어집니다.";}
-    else{g.style.display="";ew.style.display="none";note.textContent="데모 로그인입니다. Supabase 키를 넣으면 실제 로그인·동기화가 켜집니다.";}
+    if(SUPA_ON){g.style.display="none";ew.style.display="";note.textContent="";}
+    else{g.style.display="";ew.style.display="none";note.textContent="";}
     document.getElementById("loginGate").classList.add("show");
   }
   function hideLogin(){document.getElementById("loginGate").classList.remove("show");}
