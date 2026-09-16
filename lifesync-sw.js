@@ -1,4 +1,4 @@
-const CACHE_NAME = "lifesync-shell-v1";
+const CACHE_NAME = "lifesync-shell-v3";
 const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./assets/lifesync-calendar-link-icon.png"];
 
 self.addEventListener("install", event => {
@@ -14,7 +14,7 @@ self.addEventListener("fetch", event => {
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
   if (event.request.mode === "navigate") {
-    event.respondWith(fetch(event.request).then(response => {
+    event.respondWith(fetch(event.request, { cache: "no-store" }).then(response => {
       const copy = response.clone();
       caches.open(CACHE_NAME).then(cache => cache.put("./index.html", copy));
       return response;
@@ -39,6 +39,10 @@ self.addEventListener("push", event => {
     renotify: true,
     requireInteraction: true,
     silent: data.silent === true,
+    actions: [
+      { action: "open", title: "열기" },
+      { action: "dismiss", title: "닫기" }
+    ],
     data: { url: data.url || "./index.html", key: data.key || "" }
   };
   event.waitUntil(self.registration.showNotification(title, options));
@@ -46,6 +50,7 @@ self.addEventListener("push", event => {
 
 self.addEventListener("notificationclick", event => {
   event.notification.close();
+  if (event.action === "dismiss") return;
   const target = new URL((event.notification.data && event.notification.data.url) || "./index.html", self.location.href).href;
   event.waitUntil(clients.matchAll({ type: "window", includeUncontrolled: true }).then(list => {
     for (const client of list) {
