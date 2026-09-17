@@ -1,12 +1,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>LifeSync — 개인 일정 관리 프로토타입</title>
 <meta name="theme-color" content="#7c3aed">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="apple-touch-icon" href="./assets/lifesync-calendar-link-icon.png">
+<link rel="manifest" href="./manifest.webmanifest?v=20260917">
+<link rel="apple-touch-icon" href="./assets/lifesync-calendar-link-icon-20260917.png">
 <style>
   :root{
     color-scheme:light;
@@ -1307,20 +1307,78 @@ button{transition:background-color .14s ease,border-color .14s ease,color .14s e
 @media(max-width:650px){.fab{right:14px!important;left:auto!important;bottom:calc(76px + env(safe-area-inset-bottom))!important;width:52px;height:52px;border-radius:18px}}
 @media(min-width:651px) and (max-width:1024px){.fab{right:22px!important;left:auto!important;bottom:calc(82px + env(safe-area-inset-bottom))!important;width:56px;height:56px;border-radius:19px}}
 @media(max-width:420px){.calendar-tools{gap:4px}.cal-meta-toggle{padding:6px 8px;font-size:10px}.calendar-tools .todaybtn{padding-inline:10px}.calendar-date-info{font-size:11.5px}}
+
+/* ===== Compact header + iPhone/iPad viewport stability ===== */
+html,body{width:100%;height:100%;overscroll-behavior:none;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body,.app{touch-action:pan-x pan-y}
+.topbar{padding:calc(7px + env(safe-area-inset-top)) 14px 7px!important}
+.topbar .brand{min-height:34px}
+.view-title-row,.topbar .sub{display:none!important}
+.screen{padding:8px 14px 10px!important;scroll-padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+.gnb{padding-top:5px!important}
+#v-cal>.row-between{margin-top:0}
+#v-cal>.calnav{margin-top:8px}
+#v-habit .habit-calnav{display:grid!important;grid-template-columns:minmax(76px,1fr) auto minmax(76px,1fr);align-items:center;width:100%;margin:0 0 10px!important;gap:8px!important}
+#v-habit .habit-date-nav{grid-column:2;display:grid;grid-template-columns:34px minmax(104px,auto) 34px;align-items:center;gap:2px;padding:3px;border:1px solid var(--border);border-radius:14px;background:var(--surface-sunk);min-width:0}
+#v-habit .habit-date-nav .navbtn{width:34px;height:34px;border-radius:10px;background:var(--surface-2)!important}
+#v-habit .habit-date-nav .calnav-label{display:grid;place-items:center;min-width:104px;height:34px;padding:0 8px;font-size:14px;line-height:1;text-align:center}
+#v-habit .habit-month-now{grid-column:3;justify-self:end;display:inline-grid!important;place-items:center;margin:0!important;width:82px;height:42px;min-height:42px;padding:0 8px!important;border:1px solid color-mix(in srgb,var(--accent) 35%,var(--border))!important;border-radius:14px!important;background:var(--surface-2)!important;color:var(--accent-ink)!important;font-size:11px!important;line-height:1!important;text-align:center!important;white-space:nowrap}
+#v-habit .habit-month-now:hover{background:var(--accent-soft)!important;border-color:var(--accent)!important}
+#v-habit .habit-month-now:active{background:color-mix(in srgb,var(--accent) 20%,var(--surface-2))!important;transform:scale(.97)}
+
+/* Goal registration remains visibly outlined; interaction deepens the fill. */
+#gdEdit{border:1.5px solid color-mix(in srgb,var(--accent) 58%,var(--border-strong))!important;background:var(--surface-2)!important;color:var(--accent-ink)!important;transition:background-color .14s ease,border-color .14s ease,color .14s ease,transform .08s ease!important}
+#gdEdit:hover{border-color:var(--accent)!important;background:color-mix(in srgb,var(--accent) 12%,var(--surface-2))!important;color:var(--accent-ink)!important}
+#gdEdit:active{border-color:var(--accent)!important;background:color-mix(in srgb,var(--accent) 24%,var(--surface-2))!important;transform:scale(.97)!important}
+
+/* A short screen scrolls the complete Eisenhower board instead of clipping row 2. */
+#v-todo.active{overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior-y:contain;padding-bottom:4px}
+#todoMatrix{flex:1 0 520px!important;min-height:520px!important;height:auto!important;margin-top:10px!important;gap:10px!important;grid-template-rows:repeat(2,minmax(245px,1fr))!important;overflow:visible!important;padding-bottom:2px}
+#todoMatrix .quad{min-height:245px!important;height:auto!important;padding:12px 10px 10px!important}
+#todoMatrix .qlist{min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain}
+
+/* iOS automatically zooms focused controls below 16px. Keep forms stable on phones and tablets. */
+@media (max-width:1024px){
+  input,select,textarea,[contenteditable="true"]{font-size:16px!important}
+  .screen{padding-inline:12px!important}
+  .brand .logo .brand-logo{width:22px;height:22px}
+  .icon-btn{width:32px;height:32px}
+}
+@media (max-width:430px){
+  .topbar{padding-inline:12px!important}
+  .brand .logo{gap:6px;font-size:12px}
+  #todoMatrix{min-height:500px!important;flex-basis:500px!important;grid-template-rows:repeat(2,minmax(235px,1fr))!important}
+  #todoMatrix .quad{min-height:235px!important;padding:10px 8px 8px!important;border-radius:18px!important}
+  #todoMatrix .qtop{margin-bottom:6px}
+  #todoMatrix .qtop h4{font-size:11.5px}
+  #todoMatrix .qitem{min-height:46px!important;padding:7px!important}
+  #todoMatrix .qtext{font-size:11.5px}
+  #todoMatrix .qmeta-item{font-size:8.5px;padding:2px 4px}
+  #v-habit .habit-calnav{grid-template-columns:minmax(70px,1fr) auto minmax(70px,1fr);gap:4px!important}
+  #v-habit .habit-date-nav{grid-template-columns:30px minmax(88px,auto) 30px;gap:2px;padding:3px}
+  #v-habit .habit-date-nav .navbtn{width:30px;height:32px}
+  #v-habit .habit-date-nav .calnav-label{min-width:88px;height:32px;padding-inline:4px;font-size:13px}
+  #v-habit .habit-month-now{width:74px;height:40px;min-height:40px;padding:0 6px!important;font-size:10.5px!important}
+}
+@media (min-width:700px) and (max-width:1024px){
+  .screen{padding-inline:18px!important}
+  #todoMatrix{min-height:610px!important;flex-basis:610px!important;grid-template-rows:repeat(2,minmax(292px,1fr))!important;gap:12px!important}
+  #todoMatrix .quad{min-height:292px!important;padding:14px 12px 11px!important}
+}
 </style>
 <div class="clay-blobs" aria-hidden="true"><span class="cb cb1"></span><span class="cb cb2"></span><span class="cb cb3"></span></div>
 
 <div class="app">
   <header class="topbar">
     <div class="brand">
-      <div class="logo"><img class="brand-logo" src="assets/lifesync-calendar-link-icon.png" alt=""> <span>LifeSync</span> <span id="syncStat" class="syncstat" hidden></span></div>
+      <div class="logo"><img class="brand-logo" src="assets/lifesync-calendar-link-icon-20260917.png" alt=""> <span>LifeSync</span> <span id="syncStat" class="syncstat" hidden></span></div>
       <div style="display:flex;gap:8px">
         <button class="icon-btn" id="notifBtn" aria-label="알림" style="position:relative"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 8 2.5 8H3.5S6 15 6 9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span id="notifDot" style="display:none"></span></button>
         <button class="icon-btn" id="themeBtn" aria-label="테마 전환"></button>
         <button class="icon-btn" id="acctBtn" aria-label="계정"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></svg></button>
       </div>
     </div>
-    <div class="view-title-row"><h1 id="viewTitle">캘린더</h1><button type="button" class="pill habit-month-now" id="habThisMonth">이번달 보기</button></div>
+    <div class="view-title-row"><h1 id="viewTitle">캘린더</h1></div>
     <div class="sub" id="viewSub"></div>
   </header>
 
@@ -1398,10 +1456,13 @@ button{transition:background-color .14s ease,border-color .14s ease,color .14s e
     </section>
 
     <section class="view" id="v-habit">
-      <div class="calnav" style="margin-top:2px">
-        <button class="navbtn" id="habPrev" aria-label="이전 달">‹</button>
-        <div class="calnav-label" id="habLabel"></div>
-        <button class="navbtn" id="habNext" aria-label="다음 달">›</button>
+      <div class="calnav habit-calnav" style="margin-top:2px">
+        <div class="habit-date-nav">
+          <button class="navbtn" id="habPrev" aria-label="이전 달">‹</button>
+          <div class="calnav-label" id="habLabel"></div>
+          <button class="navbtn" id="habNext" aria-label="다음 달">›</button>
+        </div>
+        <button type="button" class="pill habit-month-now" id="habThisMonth">이번달 보기</button>
       </div>
       <div id="habitList"></div>
     </section>
@@ -1469,7 +1530,7 @@ button{transition:background-color .14s ease,border-color .14s ease,color .14s e
 <div class="logingate" id="loginGate">
   <div class="lg-card" role="dialog" aria-labelledby="loginTitle">
     <div class="lg-brand">
-      <div class="lg-logo"><img src="assets/lifesync-calendar-link-icon.png" alt=""><span>LifeSync</span></div>
+      <div class="lg-logo"><img src="assets/lifesync-calendar-link-icon-20260917.png" alt=""><span>LifeSync</span></div>
       <div class="lg-h" id="loginTitle">로그인</div>
     </div>
     <button type="button" class="lg-google" id="lgGoogle"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Google로 계속하기</button>
@@ -3447,7 +3508,7 @@ button{transition:background-color .14s ease,border-color .14s ease,color .14s e
     });return true;}catch(err){return false;}
   }
   function nativeAlarmOptions(a,sounded){
-    return {body:[a.sub,a.rep].filter(Boolean).join(" · ")||"지금 확인해 주세요.",icon:"./assets/lifesync-calendar-link-icon.png",badge:"./assets/lifesync-calendar-link-icon.png",tag:a.key,renotify:true,requireInteraction:true,silent:a.mode!=="sound",actions:[{action:"open",title:"열기"},{action:"dismiss",title:"닫기"}],data:{url:location.href,key:a.key}};
+    return {body:[a.sub,a.rep].filter(Boolean).join(" · ")||"지금 확인해 주세요.",icon:"./assets/lifesync-calendar-link-icon-20260917.png",badge:"./assets/lifesync-calendar-link-icon-20260917.png",tag:a.key,renotify:true,requireInteraction:true,silent:a.mode!=="sound",actions:[{action:"open",title:"열기"},{action:"dismiss",title:"닫기"}],data:{url:location.href,key:a.key}};
   }
   function deliverNativeAlarm(a,sounded){
     if(!("Notification" in window)||Notification.permission!=="granted")return;
@@ -3496,6 +3557,12 @@ button{transition:background-color .14s ease,border-color .14s ease,color .14s e
   document.addEventListener("visibilitychange",alarmTick);
   window.addEventListener("focus",alarmTick);
   window.addEventListener("pageshow",alarmTick);
+
+  // iOS Safari emits gesture events even when a form control has focus.
+  // Blocking them keeps sheets and forms at the same scale while typing.
+  ["gesturestart","gesturechange","gestureend"].forEach(function(type){
+    document.addEventListener(type,function(e){e.preventDefault();},{passive:false});
+  });
 
 })();
 </script>

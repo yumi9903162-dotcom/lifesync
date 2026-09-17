@@ -1,0 +1,11 @@
+LifeSync GitHub 업로드 폴더
+
+이 폴더 안의 파일과 폴더를 모두 GitHub 저장소의 최상위 위치에 올리세요.
+- index.html
+- lifesync-sw.js
+- manifest.webmanifest
+- PUSH-SETUP.md
+- assets 폴더 전체
+- supabase 폴더 전체
+
+앞으로 수정할 때마다 이 폴더에 최신 파일을 덮어씁니다.
