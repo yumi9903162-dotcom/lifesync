@@ -1,4 +1,4 @@
-const CACHE_NAME = "lifesync-shell-v8";
+const CACHE_NAME = "lifesync-shell-v10";
 const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./assets/lifesync-calendar-link-icon-20260917.png"];
 
 self.addEventListener("install", event => {
