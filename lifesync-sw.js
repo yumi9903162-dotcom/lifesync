@@ -1,5 +1,5 @@
-const CACHE_NAME = "lifesync-shell-v10";
-const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./assets/lifesync-calendar-link-icon-20260917.png"];
+const CACHE_NAME = "lifesync-shell-v16";
+const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./assets/lifesync-app-icon-192-20260917.png", "./assets/lifesync-app-icon-512-20260917.png", "./assets/lifesync-apple-touch-icon-180-20260917.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)).then(() => self.skipWaiting()));
@@ -16,9 +16,9 @@ self.addEventListener("fetch", event => {
   if (event.request.mode === "navigate") {
     event.respondWith(fetch(event.request, { cache: "no-store" }).then(response => {
       const copy = response.clone();
-      caches.open(CACHE_NAME).then(cache => cache.put("./index.html", copy));
+      caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
       return response;
-    }).catch(() => caches.match("./index.html")));
+    }).catch(() => caches.match(event.request).then(cached => cached || caches.match("./index.html"))));
     return;
   }
   event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
@@ -33,8 +33,8 @@ self.addEventListener("push", event => {
   const title = data.title || "LifeSync 알림";
   const options = {
     body: data.body || "예정된 일정을 확인해 주세요.",
-    icon: "./assets/lifesync-calendar-link-icon-20260917.png",
-    badge: "./assets/lifesync-calendar-link-icon-20260917.png",
+    icon: "./assets/lifesync-app-icon-192-20260917.png",
+    badge: "./assets/lifesync-app-icon-192-20260917.png",
     tag: data.tag || "lifesync-reminder",
     renotify: true,
     requireInteraction: true,

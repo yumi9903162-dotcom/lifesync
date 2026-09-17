@@ -11,10 +11,16 @@
   "theme_color": "#7c3aed",
   "icons": [
     {
-      "src": "./assets/lifesync-calendar-link-icon-20260917.png",
-      "sizes": "1280x1280",
+      "src": "./assets/lifesync-app-icon-192-20260917.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/lifesync-app-icon-512-20260917.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

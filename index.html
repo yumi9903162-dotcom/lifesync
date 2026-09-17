@@ -5,8 +5,8 @@
 <meta name="theme-color" content="#7c3aed">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="manifest" href="./manifest.webmanifest?v=20260917">
-<link rel="apple-touch-icon" href="./assets/lifesync-calendar-link-icon-20260917.png">
+<link rel="manifest" href="./manifest.webmanifest?v=20260917b">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/lifesync-apple-touch-icon-180-20260917.png">
 <style>
   :root{
     color-scheme:light;
@@ -137,9 +137,9 @@
   .block{position:absolute;left:0;right:0;border-radius:9px;padding:4px 8px;overflow:hidden;color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.15);cursor:pointer;border-left:3px solid rgba(255,255,255,.5);display:flex;align-items:center;gap:6px}
   .block .bt{flex:1;min-width:0;font-size:12px;font-weight:650;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .block .btime{flex:0 0 auto;max-width:54%;font-size:10px;line-height:1.15;opacity:.94;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .block.has-date-range .bt{max-width:36%}.block.has-date-range .btime{max-width:62%;font-size:9px}
+  .block.has-date-range .bt{max-width:none}.block.has-date-range .btime{max-width:68%;font-size:9px}
   .block.no-end{display:flex;align-items:center;gap:6px;padding-top:3px;padding-bottom:3px}
-  .block.no-end .bt{flex:1;min-width:0}.block.no-end .btime{flex:0 0 auto;white-space:nowrap;line-height:1}
+  .block.no-end .bt{flex:1 1 auto;min-width:0}.block.no-end .btime{flex:0 1 auto;margin-left:auto;white-space:nowrap;line-height:1;text-align:right}
   .nowline{position:absolute;left:44px;right:0;height:2px;background:var(--overdue);z-index:5}
   .nowline::before{content:"";position:absolute;left:-5px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--overdue)}
 
@@ -1273,6 +1273,7 @@ button{transition:background-color .14s ease,border-color .14s ease,color .14s e
 :root[data-theme="dark"] .date-meta-mark[data-mark="기"]{background:#66510f!important;border-color:#9c7b16;color:#ffe483!important}
 .mdayhead.sel .date-meta-mark,.daychip.sel .date-meta-mark{background:rgba(255,255,255,.22)!important;border-color:transparent!important;color:#fff!important}
 .calendar-date-info{display:flex;align-items:flex-start;gap:8px;margin:8px 0 10px;padding:9px 11px;border:1px solid color-mix(in srgb,var(--accent) 14%,var(--border));border-radius:12px;background:color-mix(in srgb,var(--accent-soft) 45%,var(--surface));color:var(--text-2);font-size:12px;line-height:1.45}
+.calendar-date-info[hidden]{display:none!important;margin:0!important;padding:0!important;border:0!important}
 .calendar-date-info .holiday-name{color:#d92d4d;font-weight:800}.calendar-date-info .observance-name{color:#6d28d9;font-weight:700}
 .monthline .ml-meta{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#d92d4d;font-size:11px;font-weight:750}
 :root[data-theme="dark"] .daychip.holiday:not(.sel) .dow,:root[data-theme="dark"] .daychip.holiday:not(.sel) .dnum,:root[data-theme="dark"] .daychip.sunday:not(.sel) .dow,:root[data-theme="dark"] .daychip.sunday:not(.sel) .dnum,:root[data-theme="dark"] .mdayhead.holiday:not(.sel) .dn,:root[data-theme="dark"] .mdayhead.sunday:not(.sel) .dn,:root[data-theme="dark"] .month .mhead span:first-child{color:#ff8094!important}
@@ -1293,6 +1294,11 @@ button{transition:background-color .14s ease,border-color .14s ease,color .14s e
 .day-schedule-dot{width:7px;height:32px;border-radius:999px}.day-schedule-copy{display:grid;gap:5px;min-width:0}.day-schedule-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:750}.day-schedule-meta{display:flex;align-items:center;gap:4px;min-width:0;flex-wrap:wrap}.day-schedule-tag{display:inline-flex;align-items:center;min-height:17px;padding:1px 6px;border-radius:999px;background:var(--surface);color:var(--text-3);font-size:9px;font-weight:750;white-space:nowrap}.day-schedule-tag.on{background:var(--accent-soft);color:var(--accent-ink)}.day-schedule-time{color:var(--text-3);font-size:10px;white-space:nowrap}
 .block.todo-time-block{background:#fff!important;color:#30263d!important;border:1.5px solid #6d28d9!important;box-shadow:none!important}.block.todo-time-block .btime{color:#5b21b6;opacity:1;font-weight:750}.block.todo-time-block.past{opacity:1}.block.todo-time-block.done{opacity:.58}.block.todo-time-block .bt{text-decoration:none}.block.todo-time-block.done .bt{text-decoration:line-through}.todo-cat-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:1px;box-shadow:none}
 #dayTodos .tmeta{max-height:none!important;overflow:visible!important}.time-meta{white-space:nowrap}
+.todo-schedule-pack{display:inline-flex;align-items:center;gap:4px;min-width:0;max-width:100%;flex-wrap:wrap}
+.todo-schedule-pack.long{order:20;flex:1 0 100%;margin-top:1px}
+.todo-schedule-pack .ntag{white-space:nowrap}
+.block .btime{margin-left:auto;text-align:right}
+.block.has-date-range .btime{margin-left:auto}
 /* 다크 모드는 흰색 하이라이트 그림자를 제거하고 겹치는 면에만 짧은 어두운 깊이를 사용 */
 :root[data-theme="dark"] *, :root[data-theme="dark"] *::before, :root[data-theme="dark"] *::after{box-shadow:none!important;text-shadow:none!important}
 :root[data-theme="dark"] .sheet,:root[data-theme="dark"] .notif{box-shadow:0 5px 16px rgba(0,0,0,.24)!important}
@@ -1332,11 +1338,15 @@ body,.app{touch-action:pan-x pan-y}
 #gdEdit:hover{border-color:var(--accent)!important;background:color-mix(in srgb,var(--accent) 12%,var(--surface-2))!important;color:var(--accent-ink)!important}
 #gdEdit:active{border-color:var(--accent)!important;background:color-mix(in srgb,var(--accent) 24%,var(--surface-2))!important;transform:scale(.97)!important}
 
-/* A short screen scrolls the complete Eisenhower board instead of clipping row 2. */
-#v-todo.active{overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior-y:contain;padding-bottom:4px}
-#todoMatrix{flex:1 0 520px!important;min-height:520px!important;height:auto!important;margin-top:10px!important;gap:10px!important;grid-template-rows:repeat(2,minmax(245px,1fr))!important;overflow:visible!important;padding-bottom:2px}
-#todoMatrix .quad{min-height:245px!important;height:auto!important;padding:12px 10px 10px!important}
-#todoMatrix .qlist{min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain}
+/* Desktop keeps its existing fitted matrix; mobile gets a separate measured layout below. */
+#v-todo.active{overflow:hidden!important;padding-bottom:0}
+#todoMatrix{flex:1 1 auto!important;min-height:0!important;height:auto!important;margin-top:8px!important;gap:10px!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;overflow:hidden!important;padding-bottom:0}
+#todoMatrix .quad{min-height:0!important;height:auto!important;padding:12px 10px 10px!important;overflow:hidden!important}
+#todoMatrix .qlist{flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:auto!important}
+@media (min-width:1025px){
+  #todoMatrix{flex:1 0 520px!important;min-height:520px!important;grid-template-rows:repeat(2,minmax(245px,1fr))!important;overflow:hidden!important}
+  #todoMatrix .quad{min-height:245px!important}
+}
 
 /* iOS automatically zooms focused controls below 16px. Keep forms stable on phones and tablets. */
 @media (max-width:1024px){
@@ -1346,15 +1356,13 @@ body,.app{touch-action:pan-x pan-y}
   .icon-btn{width:32px;height:32px}
   #v-todo.active{display:flex!important;height:100%!important;min-height:0!important;overflow:hidden!important;padding-bottom:0!important}
   #v-todo #todoSeg{position:relative;z-index:3;flex:0 0 auto!important;margin-bottom:8px!important;background:var(--surface-sunk)!important}
-  #todoContentScroll{display:flex;flex:1 1 auto;min-height:0;flex-direction:column;overflow-x:hidden;overflow-y:auto;padding:0 2px calc(76px + env(safe-area-inset-bottom)) 0;scroll-padding-bottom:calc(76px + env(safe-area-inset-bottom));overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}
+  #todoContentScroll{display:flex;flex:1 1 auto;min-height:0;flex-direction:column;overflow-x:hidden;overflow-y:auto;padding:0 2px calc(76px + env(safe-area-inset-bottom)) 0;scroll-padding-bottom:calc(76px + env(safe-area-inset-bottom));overscroll-behavior-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
   #todoList{flex:0 0 auto!important;min-height:0!important;overflow:visible!important;padding-right:2px}
-  #todoMatrix{flex:0 0 auto!important;min-height:0!important;height:auto!important;grid-template-rows:repeat(2,minmax(clamp(165px,22dvh,220px),auto))!important;overflow:visible!important;padding-bottom:8px!important}
-  #todoMatrix .quad{min-height:clamp(165px,22dvh,220px)!important;height:auto!important;overflow:visible!important}
-  #todoMatrix .qlist{flex:0 0 auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;overscroll-behavior:auto!important;scrollbar-gutter:auto!important}
-  #todoContentScroll.matrix-mode{overflow:hidden!important;padding:0 2px 68px 0!important}
-  #todoContentScroll.matrix-mode #todoMatrix{display:grid;flex:1 1 auto!important;min-height:0!important;height:auto!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin-top:2px!important;overflow:hidden!important;padding-bottom:0!important}
+  #todoContentScroll.matrix-mode{display:block!important;overflow-x:hidden!important;overflow-y:auto!important;padding:0 2px calc(76px + env(safe-area-inset-bottom)) 0!important;scroll-padding-bottom:calc(76px + env(safe-area-inset-bottom));touch-action:pan-y;-webkit-overflow-scrolling:touch}
+  #todoContentScroll.matrix-mode #todoMatrix{display:grid;flex:none!important;width:100%;height:var(--mobile-matrix-height,560px)!important;min-height:480px!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin-top:2px!important;overflow:visible!important;padding-bottom:0!important;touch-action:pan-y}
   #todoContentScroll.matrix-mode #todoMatrix .quad{min-height:0!important;height:auto!important;overflow:hidden!important}
-  #todoContentScroll.matrix-mode #todoMatrix .qlist{display:flex;flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;scrollbar-gutter:stable!important;padding-bottom:4px}
+  #todoContentScroll.matrix-mode #todoMatrix .qlist{display:flex;flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:auto!important;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-gutter:auto!important;padding-bottom:4px}
+  #todoContentScroll.matrix-mode #todoMatrix .qitem{touch-action:pan-y}
 }
 @media (max-width:430px){
   .topbar{padding-inline:12px!important}
@@ -1380,7 +1388,7 @@ body,.app{touch-action:pan-x pan-y}
 
 /* ===== iPhone / iPad usability and overflow audit ===== */
 @media (max-width:1024px){
-  .app{width:100%;max-width:none;min-width:0}
+  .app{width:100%;max-width:none;min-width:0;height:var(--app-height,100vh)!important;min-height:0!important}
   .screen{width:100%;padding-left:calc(12px + env(safe-area-inset-left))!important;padding-right:calc(12px + env(safe-area-inset-right))!important}
   .view,.view.active{width:100%;min-width:0}
   .topbar{padding-left:calc(12px + env(safe-area-inset-left))!important;padding-right:calc(12px + env(safe-area-inset-right))!important}
@@ -1432,7 +1440,7 @@ body,.app{touch-action:pan-x pan-y}
   .screen{padding-top:5px!important;padding-bottom:5px!important}
   .gnb{padding-top:3px!important;padding-bottom:calc(3px + env(safe-area-inset-bottom))!important}.tab{padding-block:3px 2px}.tab svg{width:20px;height:20px}.tab .tl{font-size:9px}
   #todoContentScroll.matrix-mode{overflow-y:auto!important;padding-bottom:64px!important}
-  #todoContentScroll.matrix-mode #todoMatrix{flex:0 0 360px!important;min-height:360px!important}
+  #todoContentScroll.matrix-mode #todoMatrix{height:440px!important;min-height:440px!important}
   #goalWrap{margin:-10px auto 0!important}#goalSvg{height:clamp(145px,28dvh,190px)!important}
   #v-habit .habit-calnav{margin-bottom:6px!important}
   .sheet{max-height:calc(100dvh - 4px)!important}
@@ -1443,7 +1451,7 @@ body,.app{touch-action:pan-x pan-y}
 <div class="app">
   <header class="topbar">
     <div class="brand">
-      <div class="logo"><img class="brand-logo" src="assets/lifesync-calendar-link-icon-20260917.png" alt=""> <span>LifeSync</span> <span id="syncStat" class="syncstat" hidden></span></div>
+      <div class="logo"><img class="brand-logo" src="assets/lifesync-app-icon-192-20260917.png" alt=""> <span>LifeSync</span> <span id="syncStat" class="syncstat" hidden></span></div>
       <div style="display:flex;gap:8px">
         <button class="icon-btn" id="notifBtn" aria-label="알림" style="position:relative"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 8 2.5 8H3.5S6 15 6 9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span id="notifDot" style="display:none"></span></button>
         <button class="icon-btn" id="themeBtn" aria-label="테마 전환"></button>
@@ -1604,7 +1612,7 @@ body,.app{touch-action:pan-x pan-y}
 <div class="logingate" id="loginGate">
   <div class="lg-card" role="dialog" aria-labelledby="loginTitle">
     <div class="lg-brand">
-      <div class="lg-logo"><img src="assets/lifesync-calendar-link-icon-20260917.png" alt=""><span>LifeSync</span></div>
+      <div class="lg-logo"><img src="assets/lifesync-app-icon-192-20260917.png" alt=""><span>LifeSync</span></div>
       <div class="lg-h" id="loginTitle">로그인</div>
     </div>
     <button type="button" class="lg-google" id="lgGoogle"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Google로 계속하기</button>
@@ -1642,6 +1650,20 @@ body,.app{touch-action:pan-x pan-y}
 <script>
 (function(){
   "use strict";
+  // iOS Safari (especially older iPadOS) can report 100vh/100dvh differently
+  // from the actually visible area. Measure it and use the value only in the
+  // mobile/tablet media query so desktop sizing stays unchanged.
+  function syncAppViewportHeight(){
+    var h=(window.visualViewport&&window.visualViewport.height)||window.innerHeight||document.documentElement.clientHeight;
+    if(h>0){
+      document.documentElement.style.setProperty("--app-height",Math.round(h)+"px");
+      document.documentElement.style.setProperty("--mobile-matrix-height",Math.max(480,Math.min(620,Math.round(h*.68)))+"px");
+    }
+  }
+  syncAppViewportHeight();
+  window.addEventListener("resize",syncAppViewportHeight,{passive:true});
+  window.addEventListener("orientationchange",syncAppViewportHeight,{passive:true});
+  if(window.visualViewport)window.visualViewport.addEventListener("resize",syncAppViewportHeight,{passive:true});
   /* ============================================================
      Supabase 연동 설정 — 아래 두 값만 채우면 클라우드 동기화 ON.
      (비워두면 지금처럼 이 기기 로컬 저장으로 동작합니다.)
@@ -2283,7 +2305,7 @@ body,.app{touch-action:pan-x pan-y}
   function renderDayTodos(){
     var el=document.getElementById("dayTodos");
     var list=state.todos.filter(function(t){return todoOnDay(t,ui.selDate);});
-    if(!list.length){el.innerHTML='<div class="empty">이 날 등록된 할 일이 없어요.</div>';return;}
+    if(!list.length){el.innerHTML='<div class="empty">이 날짜에는 할 일이 없어요.<br><b>+ 할 일</b> 버튼으로 추가해보세요.</div>';return;}
     el.innerHTML=""; list.forEach(function(t){el.appendChild(todoEl(t,ui.selDate));});
   }
 
@@ -2328,12 +2350,11 @@ body,.app{touch-action:pan-x pan-y}
           var timeText=t.start?(t.start+(t.end?"–"+t.end:"")):"";
           var qmeta='<div class="qmeta">'
             +(t.cat?'<span class="qmeta-item qmeta-cat" style="--cc:'+catColor(t.cat)+'"><i class="catdotp" style="background:'+catColor(t.cat)+'"></i>'+esc(catName(t.cat))+'</span>':'')
-            +(dateText?'<span class="qmeta-item">📅 '+esc(dateText)+'</span>':'')
-            +(timeText?'<span class="qmeta-item">🕒 '+esc(timeText)+'</span>':'')
             +(t.notify&&t.notify!=="off"?'<span class="qmeta-item notify-icon" title="'+(t.notify==="sound"?'소리 알림':'무음 알림')+'" aria-label="'+(t.notify==="sound"?'소리 알림':'무음 알림')+'">'+(t.notify==="sound"?"🔔":"🔇")+'</span>':'')
             +(todoRepeats(t)?'<span class="qmeta-item repeat-tag" title="'+esc(repeatLabel(t))+'" aria-label="반복 할 일"><span class="repeat-mark">↻</span></span>':'')
             +(isOverdue(t)?'<span class="latetag">지연</span>':'')
             +(t.checklist&&t.checklist.length?'<span class="qmeta-item">☑ '+t.checklist.filter(function(x){return x.done;}).length+'/'+t.checklist.length+'</span>':'')
+            +((dateText||timeText)?'<span class="todo-schedule-pack'+(((t.endDate&&t.endDate!==t.date)||t.end)?' long':'')+'">'+(dateText?'<span class="qmeta-item">📅 '+esc(dateText)+'</span>':'')+(timeText?'<span class="qmeta-item">🕒 '+esc(timeText)+'</span>':'')+'</span>':'')
             +'</div>';
           it.innerHTML='<span class="qdot"></span><div class="qmain"><div class="qtext">'+esc(t.title)+'</div>'+qmeta+'</div>'
             +'<button class="qcheck" aria-label="완료 토글"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></button>';
@@ -2361,15 +2382,16 @@ body,.app{touch-action:pan-x pan-y}
     contextDate=contextDate||todoContextDate(t);var contextDone=todoDoneOn(t,contextDate);
     var d=document.createElement("div");d.className="todo qq"+((t.quad||"q2").slice(1))+(contextDone?" done":"");
     if(t.cat)d.style.borderLeft="3px solid "+catColor(t.cat);
-    var qshort={q1:"긴급·중요",q2:"중요",q3:"긴급",q4:"일반"},meta='';
-    if(t.date)meta+='<span class="ntag">📅 '+((t.endDate&&t.endDate!==t.date)?md(t.date)+"–"+md(t.endDate):md(t.date))+'</span>';
-    if(t.start)meta+='<span class="ntag time-meta">🕒 '+t.start+(t.end?"–"+t.end:"")+'</span>';
+    var qshort={q1:"긴급·중요",q2:"중요",q3:"긴급",q4:"일반"},qkey=t.quad||"q2",meta='',scheduleMeta='';
     if(t.cat)meta+='<span class="catmeta" style="background:'+catColor(t.cat)+'22;color:'+catColor(t.cat)+'">'+esc(catName(t.cat))+'</span>';
-    meta+='<span class="qtag '+QUAD[t.quad].cls+'">'+qshort[t.quad||"q2"]+'</span>';
+    meta+='<span class="qtag '+QUAD[qkey].cls+'">'+qshort[qkey]+'</span>';
     if(t.notify&&t.notify!=="off")meta+='<span class="ntag notify-icon" title="'+(t.notify==="sound"?'소리 알림':'무음 알림')+'" aria-label="'+(t.notify==="sound"?'소리 알림':'무음 알림')+'">'+(t.notify==="sound"?"🔔":"🔇")+'</span>';
     if(todoRepeats(t))meta+='<span class="ntag repeat-tag" title="'+esc(repeatLabel(t))+'" aria-label="반복 할 일"><span class="repeat-mark">↻</span></span>';
     if(isOverdue(t))meta+='<span class="latetag">지연</span>';
     if(t.goalRef&&goalNodeByStr(t.goalRef))meta+='<span class="goalmeta">🎯 '+esc((goalNodeByStr(t.goalRef).t||"목표"))+'</span>';
+    if(t.date)scheduleMeta+='<span class="ntag">📅 '+((t.endDate&&t.endDate!==t.date)?md(t.date)+"–"+md(t.endDate):md(t.date))+'</span>';
+    if(t.start)scheduleMeta+='<span class="ntag time-meta">🕒 '+t.start+(t.end?"–"+t.end:"")+'</span>';
+    if(scheduleMeta)meta+='<span class="todo-schedule-pack'+(((t.endDate&&t.endDate!==t.date)||t.end)?' long':'')+'">'+scheduleMeta+'</span>';
     d.innerHTML='<button class="check" aria-label="완료 토글"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></button>'
       +'<div class="tbody"><div class="ttitle">'+esc(t.title)+'</div><div class="tmeta">'+meta+'</div></div>'
       +'<button class="tdel" aria-label="삭제">×</button>';
@@ -3584,7 +3606,7 @@ body,.app{touch-action:pan-x pan-y}
     });return true;}catch(err){return false;}
   }
   function nativeAlarmOptions(a,sounded){
-    return {body:[a.sub,a.rep].filter(Boolean).join(" · ")||"지금 확인해 주세요.",icon:"./assets/lifesync-calendar-link-icon-20260917.png",badge:"./assets/lifesync-calendar-link-icon-20260917.png",tag:a.key,renotify:true,requireInteraction:true,silent:a.mode!=="sound",actions:[{action:"open",title:"열기"},{action:"dismiss",title:"닫기"}],data:{url:location.href,key:a.key}};
+    return {body:[a.sub,a.rep].filter(Boolean).join(" · ")||"지금 확인해 주세요.",icon:"./assets/lifesync-app-icon-192-20260917.png",badge:"./assets/lifesync-app-icon-192-20260917.png",tag:a.key,renotify:true,requireInteraction:true,silent:a.mode!=="sound",actions:[{action:"open",title:"열기"},{action:"dismiss",title:"닫기"}],data:{url:location.href,key:a.key}};
   }
   function deliverNativeAlarm(a,sounded){
     if(!("Notification" in window)||Notification.permission!=="granted")return;
