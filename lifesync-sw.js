@@ -1,5 +1,5 @@
-const CACHE_NAME = "lifesync-shell-v19";
-const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./assets/lifesync-app-icon-192-20260917.png", "./assets/lifesync-app-icon-512-20260917.png", "./assets/lifesync-apple-touch-icon-180-20260917.png"];
+const CACHE_NAME = "lifesync-shell-v21";
+const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./assets/lifesync-app-icon-192-20260918.png", "./assets/lifesync-app-icon-512-20260918.png", "./assets/lifesync-apple-touch-icon-180-20260918.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)).then(() => self.skipWaiting()));
@@ -33,8 +33,8 @@ self.addEventListener("push", event => {
   const title = data.title || "LifeSync 알림";
   const options = {
     body: data.body || "예정된 일정을 확인해 주세요.",
-    icon: "./assets/lifesync-app-icon-192-20260917.png",
-    badge: "./assets/lifesync-app-icon-192-20260917.png",
+    icon: "./assets/lifesync-app-icon-192-20260918.png",
+    badge: "./assets/lifesync-app-icon-192-20260918.png",
     tag: data.tag || "lifesync-reminder",
     renotify: true,
     requireInteraction: true,

@@ -11,13 +11,13 @@
   "theme_color": "#7c3aed",
   "icons": [
     {
-      "src": "./assets/lifesync-app-icon-192-20260917.png",
+      "src": "./assets/lifesync-app-icon-192-20260918.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./assets/lifesync-app-icon-512-20260917.png",
+      "src": "./assets/lifesync-app-icon-512-20260918.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
