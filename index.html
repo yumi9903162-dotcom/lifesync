@@ -3308,19 +3308,19 @@ body,.app{touch-action:pan-x pan-y}
   function toast(msg){toastEl.textContent=msg;toastEl.classList.add("show");clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove("show");},1900);}
 
   // ---------- in-app notification (무음/화면 알림) ----------
-  var notifEl=null,notifHideT=null,notifSnoozeT=null;
+  var notifEl=null,notifSnoozeT=null,pendingAlarms={},pendingAlarmOrder=[],activeAlarmKey="",alarmRepeatTimer=null;
   function hideNotif(){if(notifEl)notifEl.classList.remove("show");}
   function repeatLabel(b){var rep=(b&&b.repeat&&b.repeat.freq)?b.repeat.freq:"none";if(rep==="none")return "";if(rep==="weekly"){var ds=(b.repeat.days&&b.repeat.days.length)?b.repeat.days.slice().sort(function(a,c){return a-c;}).map(function(i){return DOW[i];}).join("·"):"";return ds?("매주 "+ds+" 반복 알림"):"매주 반복 알림";}if(rep==="monthly")return "매월 "+parse(b.date).getDate()+"일 반복 알림";if(rep==="yearly"){var d=parse(b.date);return "매년 "+(d.getMonth()+1)+"월 "+d.getDate()+"일 반복 알림";}return "";}
-  function showNotif(kind,title,sub,rep,mode){
+  function showNotif(a){
     if(!notifEl){notifEl=document.createElement("div");notifEl.className="notif";document.body.appendChild(notifEl);}
+    var kind=a.kind,title=a.title,sub=a.sub,rep=a.rep,mode=a.mode;
     var icon=kind==="event"?"📅":kind==="habit"?"🔥":"🔔", label=kind==="event"?"일정 알림":kind==="habit"?"습관 알림":"할 일 알림";
     notifEl.innerHTML='<div class="nhead"><div class="nic">'+icon+'</div><div style="flex:1;min-width:0"><div class="nk">'+label+'</div><div class="nt">'+esc(title)+'</div></div>'+(sub?'<div class="nsub">'+esc(sub)+'</div>':'')+'</div>'
       +(rep?'<div class="nrepeat">🔁 '+esc(rep)+'</div>':'')
       +'<div class="nacts"><button class="nbtn" data-a="snooze">5분 미루기</button><button class="nbtn primary" data-a="ok">확인</button></div>';
-    notifEl.querySelector('[data-a="ok"]').onclick=function(){clearTimeout(notifHideT);hideNotif();};
-    notifEl.querySelector('[data-a="snooze"]').onclick=function(){clearTimeout(notifHideT);hideNotif();clearTimeout(notifSnoozeT);notifSnoozeT=setTimeout(function(){deliverAlarm({kind:kind,title:title,sub:sub,rep:rep,mode:mode||"silent",key:"snooze:"+Date.now()});},300000);toast("5분 뒤 다시 알려드릴게요");};
+    notifEl.querySelector('[data-a="ok"]').onclick=function(){acknowledgeAlarm(a.key);};
+    notifEl.querySelector('[data-a="snooze"]').onclick=function(){snoozeAlarm(a);};
     void notifEl.offsetWidth; notifEl.classList.add("show");
-    clearTimeout(notifHideT); notifHideT=setTimeout(hideNotif,15000);
   }
   function sampleTodo(){var td=ymd(today),open=state.todos.filter(function(x){return !todoDoneOn(x,td);});var a=open.filter(function(x){return x.notify&&x.notify!=="off";});var p=a[0]||open[0];return p?{title:p.title,sub:p.start||"",rep:repeatLabel(p)}:{title:"할 일을 확인하세요",sub:"",rep:""};}
   function sampleEvent(){var b=blocksOn(ymd(today));var a=b.filter(function(x){return x.notify&&x.notify!=="off";});var p=a[0]||b[0];return p?{title:p.title,sub:(p.allDay?"종일":(p.start||"")),rep:repeatLabel(p)}:{title:"일정을 확인하세요",sub:"",rep:""};}
@@ -3514,8 +3514,8 @@ body,.app{touch-action:pan-x pan-y}
       +'<div class="sheet-actions"><button class="btn danger" id="ac_logout">로그아웃</button><button class="btn primary" id="ac_close">닫기</button></div>');
     document.getElementById("ac_watch").onclick=function(){closeSheet();openWatch();};
     document.getElementById("ac_notify_test").onclick=function(){
-      openSheet('<h3>Windows 알림 테스트</h3><div class="hint" style="margin:0 0 12px">HTTPS로 배포된 사이트에서 브라우저 알림을 허용하면 Windows 알림 센터에 표시됩니다.</div><div class="choice-list"><button type="button" class="choice" id="nt_sound"><span class="cicon">🔔</span><div><div class="ctitle">소리 알림</div><div class="csub">Windows 기본 알림음과 함께 표시</div></div></button><button type="button" class="choice" id="nt_silent"><span class="cicon">🔇</span><div><div class="ctitle">무음 알림</div><div class="csub">소리 없이 알림만 표시</div></div></button></div><div class="sheet-actions"><button class="btn primary" id="nt_close">닫기</button></div>');
-      function testWindowsAlarm(mode){prepareAlarm(mode).then(function(){if(!("Notification" in window)||!window.isSecureContext||Notification.permission!=="granted"){toast("HTTPS 사이트에서 브라우저 알림을 허용해 주세요");updateAlarmStatus();return;}deliverAlarm({kind:"event",title:mode==="sound"?"소리 알림 테스트":"무음 알림 테스트",sub:"Windows 알림이 정상적으로 연결됐어요",rep:"",mode:mode,key:"test:"+mode+":"+Date.now()});});}
+      openSheet('<h3>Windows 알림 테스트</h3><div class="hint" style="margin:0 0 12px">소리는 현재 화면에서도 테스트할 수 있어요. Windows 알림 센터 표시는 HTTPS 배포 주소에서 브라우저 알림을 허용해야 합니다.</div><div class="choice-list"><button type="button" class="choice" id="nt_sound"><span class="cicon">🔔</span><div><div class="ctitle">소리 알림</div><div class="csub">LifeSync 알림음과 Windows 알림 표시</div></div></button><button type="button" class="choice" id="nt_silent"><span class="cicon">🔇</span><div><div class="ctitle">무음 알림</div><div class="csub">소리 없이 알림만 표시</div></div></button></div><div class="sheet-actions"><button class="btn primary" id="nt_close">닫기</button></div>');
+      function testWindowsAlarm(mode){prepareAlarm(mode).then(function(){var nativeReady=("Notification" in window)&&window.isSecureContext&&Notification.permission==="granted";deliverAlarm({kind:"event",title:mode==="sound"?"소리 알림 테스트":"무음 알림 테스트",sub:nativeReady?"Windows 알림이 정상적으로 연결됐어요":"앱 화면 알림 테스트",rep:"",mode:mode,key:"test:"+mode+":"+Date.now()});if(!nativeReady)toast(mode==="sound"?"앱 알림음은 재생했어요 · Windows 알림은 HTTPS에서 허용해 주세요":"Windows 알림은 HTTPS에서 허용해 주세요");});}
       document.getElementById("nt_sound").onclick=function(){testWindowsAlarm("sound");};document.getElementById("nt_silent").onclick=function(){testWindowsAlarm("silent");};document.getElementById("nt_close").onclick=closeSheet;
     };
     document.getElementById("ac_export").onclick=function(){
@@ -3664,35 +3664,63 @@ body,.app{touch-action:pan-x pan-y}
     pushSetupBusy=true;
     return Promise.all([alarmWorkerReady,fetch(SUPA_URL+"/functions/v1/reminder-push",{headers:{apikey:SUPA_ANON}}).then(function(r){if(!r.ok)throw new Error("푸시 서버가 아직 배포되지 않았습니다");return r.json();})]).then(function(parts){var reg=parts[0],key=parts[1]&&parts[1].publicKey;if(!reg||!reg.pushManager||!key)throw new Error("푸시 설정이 없습니다");return reg.pushManager.getSubscription().then(function(sub){return sub||reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:urlBase64Bytes(key)});});}).then(function(sub){return pushApi("subscribe",{subscription:sub.toJSON()});}).then(function(){return syncServerReminders();}).then(function(){return true;}).catch(function(e){console.warn("server push",e&&e.message);return false;}).finally(function(){pushSetupBusy=false;});
   }
-  function playAlarmSound(){
+  function ringAlarmAudio(){
     if(!alarmAudio||alarmAudio.state!=="running")return false;
-    try{[0,0.32,0.64].forEach(function(offset){
+    try{[0,0.36,0.72,1.08,1.44,1.8,2.16,2.52,2.88,3.24,3.6,3.96,4.32,4.68].forEach(function(offset){
       var osc=alarmAudio.createOscillator(),gain=alarmAudio.createGain(),at=alarmAudio.currentTime+offset;
-      osc.type="sine";osc.frequency.value=880;gain.gain.setValueAtTime(0,at);
-      gain.gain.linearRampToValueAtTime(0.18,at+0.02);gain.gain.exponentialRampToValueAtTime(0.001,at+0.24);
-      osc.connect(gain);gain.connect(alarmAudio.destination);osc.start(at);osc.stop(at+0.25);
+      osc.type="sine";osc.frequency.value=Math.round(offset/.36)%2?1046.5:880;gain.gain.setValueAtTime(0,at);
+      gain.gain.linearRampToValueAtTime(0.3,at+0.02);gain.gain.exponentialRampToValueAtTime(0.001,at+0.3);
+      osc.connect(gain);gain.connect(alarmAudio.destination);osc.start(at);osc.stop(at+0.32);
       osc.onended=function(){osc.disconnect();gain.disconnect();};
     });return true;}catch(err){return false;}
   }
+  function playAlarmSound(){
+    unlockAlarmAudio();if(!alarmAudio)return false;
+    if(alarmAudio.state==="running")return ringAlarmAudio();
+    if(alarmAudio.state==="suspended"){alarmAudio.resume().then(ringAlarmAudio).catch(function(){});return true;}
+    return false;
+  }
   function nativeAlarmOptions(a,sounded){
-    return {body:[a.sub,a.rep].filter(Boolean).join(" · ")||"지금 확인해 주세요.",icon:"./assets/lifesync-app-icon-192-20260918.png",badge:"./assets/lifesync-app-icon-192-20260918.png",tag:a.key,renotify:true,requireInteraction:true,silent:a.mode!=="sound",actions:[{action:"open",title:"열기"},{action:"dismiss",title:"닫기"}],data:{url:location.href,key:a.key}};
+    return {body:[a.sub,a.rep].filter(Boolean).join(" · ")||"지금 확인해 주세요.",icon:"./assets/lifesync-app-icon-192-20260918.png",badge:"./assets/lifesync-app-icon-192-20260918.png",tag:a.key,renotify:true,requireInteraction:true,silent:a.mode!=="sound",actions:[{action:"confirm",title:"확인"},{action:"open",title:"확인하고 열기"}],data:{url:location.href,key:a.key}};
   }
   function deliverNativeAlarm(a,sounded){
     if(!("Notification" in window)||Notification.permission!=="granted")return;
     var title="LifeSync · "+a.title,options=nativeAlarmOptions(a,sounded);
     alarmWorkerReady.then(function(reg){
       if(reg&&reg.showNotification)return reg.showNotification(title,options);
-      try{var note=new Notification(title,options);note.onclick=function(){window.focus();note.close();};}catch(err){}
+      try{var note=new Notification(title,options);note.onclick=function(){acknowledgeAlarm(a.key);window.focus();note.close();};}catch(err){}
     }).catch(function(){
-      try{var note=new Notification(title,options);note.onclick=function(){window.focus();note.close();};}catch(err){}
+      try{var note=new Notification(title,options);note.onclick=function(){acknowledgeAlarm(a.key);window.focus();note.close();};}catch(err){}
     });
   }
-  function deliverAlarm(a){
-    showNotif(a.kind,a.title,a.sub,a.rep,a.mode);
-    var nativeReady=("Notification" in window)&&Notification.permission==="granted";
-    var sounded=a.mode==="sound"&&!nativeReady&&playAlarmSound();
-    deliverNativeAlarm(a,sounded);
+  function stopAlarmRepeater(){if(alarmRepeatTimer){clearInterval(alarmRepeatTimer);alarmRepeatTimer=null;}}
+  function currentPendingAlarm(){return activeAlarmKey&&pendingAlarms[activeAlarmKey]?pendingAlarms[activeAlarmKey]:null;}
+  function presentPendingAlarm(){
+    var a=currentPendingAlarm();if(!a){hideNotif();stopAlarmRepeater();return;}
+    showNotif(a);var sounded=a.mode==="sound"&&playAlarmSound();deliverNativeAlarm(a,sounded);
   }
+  function beginAlarmRepeater(){if(!alarmRepeatTimer)alarmRepeatTimer=setInterval(presentPendingAlarm,12000);}
+  function advancePendingAlarm(){
+    while(pendingAlarmOrder.length&&!pendingAlarms[pendingAlarmOrder[0]])pendingAlarmOrder.shift();
+    activeAlarmKey=pendingAlarmOrder[0]||"";
+    if(activeAlarmKey){presentPendingAlarm();beginAlarmRepeater();}else{hideNotif();stopAlarmRepeater();}
+  }
+  function acknowledgeAlarm(key){
+    key=key||activeAlarmKey;var a=pendingAlarms[key];if(!a)return;
+    delete pendingAlarms[key];pendingAlarmOrder=pendingAlarmOrder.filter(function(k){return k!==key;});
+    state.readAlerts=state.readAlerts||{};if(a.key&&a.key.indexOf("test:")!==0&&a.key.indexOf("snooze:")!==0)state.readAlerts[a.key]=true;
+    if(key===activeAlarmKey){activeAlarmKey="";advancePendingAlarm();}updateBadge();save();
+  }
+  function snoozeAlarm(a){
+    var key=a.key;delete pendingAlarms[key];pendingAlarmOrder=pendingAlarmOrder.filter(function(k){return k!==key;});if(key===activeAlarmKey)activeAlarmKey="";advancePendingAlarm();
+    clearTimeout(notifSnoozeT);notifSnoozeT=setTimeout(function(){deliverAlarm({kind:a.kind,title:a.title,sub:a.sub,rep:a.rep,mode:a.mode||"silent",key:"snooze:"+Date.now()});},300000);toast("5분 뒤 다시 알려드릴게요");
+  }
+  function deliverAlarm(a){
+    if(!a.key)a.key="alarm:"+Date.now();
+    if(!pendingAlarms[a.key])pendingAlarmOrder.push(a.key);pendingAlarms[a.key]=a;
+    if(!activeAlarmKey){activeAlarmKey=a.key;presentPendingAlarm();beginAlarmRepeater();}
+  }
+  if("serviceWorker" in navigator)navigator.serviceWorker.addEventListener("message",function(e){var d=e.data||{};if(d.type==="lifesync-alarm-ack")acknowledgeAlarm(d.key);});
   // Start-time alarms do not depend on an end time. Mode applies to both desktop and in-app sound.
   function dueAlarms(){
     var out=[],td=ymd(new Date());

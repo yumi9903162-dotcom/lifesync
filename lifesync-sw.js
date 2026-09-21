@@ -1,4 +1,4 @@
-const CACHE_NAME = "lifesync-shell-v21";
+const CACHE_NAME = "lifesync-shell-v23";
 const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./assets/lifesync-app-icon-192-20260918.png", "./assets/lifesync-app-icon-512-20260918.png", "./assets/lifesync-apple-touch-icon-180-20260918.png"];
 
 self.addEventListener("install", event => {
@@ -40,8 +40,8 @@ self.addEventListener("push", event => {
     requireInteraction: true,
     silent: data.silent === true,
     actions: [
-      { action: "open", title: "열기" },
-      { action: "dismiss", title: "닫기" }
+      { action: "confirm", title: "확인" },
+      { action: "open", title: "확인하고 열기" }
     ],
     data: { url: data.url || "./index.html", key: data.key || "" }
   };
@@ -50,9 +50,11 @@ self.addEventListener("push", event => {
 
 self.addEventListener("notificationclick", event => {
   event.notification.close();
-  if (event.action === "dismiss") return;
+  const key = event.notification.data && event.notification.data.key;
   const target = new URL((event.notification.data && event.notification.data.url) || "./index.html", self.location.href).href;
   event.waitUntil(clients.matchAll({ type: "window", includeUncontrolled: true }).then(list => {
+    list.forEach(client => client.postMessage({ type: "lifesync-alarm-ack", key }));
+    if (event.action === "confirm") return;
     for (const client of list) {
       if (client.url.startsWith(self.location.origin) && "focus" in client) {
         client.navigate(target);
