@@ -1,0 +1,50 @@
+LifeSync 웹 업로드 안내 — v1.1.4 / 2026-10-01
+
+바탕화면 LifeSync-web-v1.1.4-Git-Upload.zip이 최신 웹 배포용 파일입니다.
+ZIP 안에는 최상위 폴더 없이 웹 파일들이 바로 들어 있습니다.
+
+GitHub에 올릴 위치
+현재 웹사이트를 배포하는 기존 저장소의 index.html이 있는 위치에 올리세요.
+Pages가 저장소 루트에서 배포되면 루트에, docs에서 배포되면 docs 안에 올립니다.
+ZIP 파일 자체를 올리지 말고 압축 해제한 내용물을 올리세요.
+
+올릴 파일 / 폴더
+- index.html
+- lifesync-sw.js
+- manifest.webmanifest
+- update.json
+- assets/ 전체 (아이콘과 로그인 SDK 포함)
+- supabase/ (기존 푸시 서버 코드와 SQL)
+- PUSH-SETUP.md
+- .gitignore
+- GITHUB-업로드-안내.txt
+
+이미 저장소에 같은 파일이 있으면 이번 파일로 교체하세요.
+assets/와 supabase/는 폴더 구조를 그대로 유지해야 합니다.
+저장소의 다른 파일이나 .git 폴더는 삭제할 필요가 없습니다.
+GitHub Pages 반영 후 기존 웹 주소에서 새로고침하거나 앱을 다시 열어 확인하세요.
+Supabase 서버 설정을 바꾸거나 SQL을 다시 실행하는 작업은 이번 수정에 필요하지 않습니다.
+
+올리지 않을 것
+- LifeSync.exe, Windows 프로그램 폴더, resources/, desktop/
+- ZIP 파일
+- 업데이트전-백업-* 폴더
+- QA 테스트 이미지, 테스트 프로필, 작업 스크립트
+
+바탕화면 LifeSync-Git-Upload도 최신 버전으로 반영했습니다.
+폴더 안에 있는 백업 폴더는 제외하고 위의 파일만 업로드하세요.
+가장 간단한 방법은 이번 ZIP을 다른 폴더에 풀고 그 내용물만 업로드하는 것입니다.
+아직 GitHub에는 직접 업로드하지 않았습니다.
+
+Windows 프로그램
+View에는 Phone / Pad만 있습니다.
+Phone: iPhone 17 기본 세로, 402 × 874 CSS px.
+Pad: iPad mini 5 가로, 1024 × 768 CSS px.
+시작 시 항상 Pad로 열립니다. 화면이 작으면 모니터 안에 맞춰 표시합니다.
+웹은 실행하는 브라우저의 실제 화면 크기에 자동 대응합니다.
+기존 Windows 프로그램은 트레이에서 완전히 종료한 다음 다시 실행하세요.
+
+치수 참고
+https://1440px.com/screen-sizes/iphone-17/
+https://iosref.com/res
+이번 버전 변경: 목표/습관/아카이브 모바일 끝 여백 확대, 주간 시간표 2시간 분량 높이 추가, 투두 네 박스 각 4px 축소.

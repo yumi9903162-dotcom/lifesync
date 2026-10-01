@@ -1,4 +1,4 @@
-const CACHE_NAME = "lifesync-shell-v28-v113-20261001";
+const CACHE_NAME = "lifesync-shell-v29-v114-20261001";
 const APP_SHELL = ["./", "./index.html", "./assets/supabase-2.45.4.min.js", "./manifest.webmanifest", "./assets/lifesync-app-icon-192-20260918.png", "./assets/lifesync-app-icon-512-20260918.png", "./assets/lifesync-apple-touch-icon-180-20260918.png"];
 
 self.addEventListener("install", event => {

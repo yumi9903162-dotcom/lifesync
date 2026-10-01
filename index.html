@@ -1,7 +1,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>LifeSync 1.1.3 — 개인 일정 관리</title>
+<title>LifeSync 1.1.4 — 개인 일정 관리</title>
 <meta name="theme-color" content="#7c3aed">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -1372,7 +1372,7 @@ body,.app{touch-action:pan-x pan-y}
   #todoContentScroll{display:flex;flex:1 1 auto;min-height:0;flex-direction:column;overflow-x:hidden;overflow-y:auto;padding:0 2px calc(76px + env(safe-area-inset-bottom)) 0;scroll-padding-bottom:calc(76px + env(safe-area-inset-bottom));overscroll-behavior-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
   #todoList{flex:0 0 auto!important;min-height:0!important;overflow:visible!important;padding-right:2px}
   #todoContentScroll.matrix-mode{display:block!important;flex:1 1 auto!important;height:auto!important;min-height:0!important;overflow-x:hidden!important;overflow-y:auto!important;padding:0 2px calc(88px + env(safe-area-inset-bottom)) 0!important;scroll-padding-bottom:calc(88px + env(safe-area-inset-bottom));overscroll-behavior-y:contain!important;touch-action:pan-y;-webkit-overflow-scrolling:touch}
-  #todoContentScroll.matrix-mode #todoMatrix{--matrix-row-height:300px;display:grid;flex:none!important;width:100%;height:auto!important;min-height:0!important;grid-template-rows:repeat(2,var(--matrix-row-height))!important;gap:8px!important;margin-top:2px!important;overflow:visible!important;padding-bottom:4px!important;touch-action:pan-y}
+  #todoContentScroll.matrix-mode #todoMatrix{--matrix-row-height:296px;display:grid;flex:none!important;width:100%;height:auto!important;min-height:0!important;grid-template-rows:repeat(2,var(--matrix-row-height))!important;gap:8px!important;margin-top:2px!important;overflow:visible!important;padding-bottom:4px!important;touch-action:pan-y}
   #todoContentScroll.matrix-mode #todoMatrix .quad{min-height:0!important;height:auto!important;overflow:hidden!important}
   #todoContentScroll.matrix-mode #todoMatrix .qlist{display:flex;flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:auto!important;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-gutter:auto!important;padding-bottom:4px}
   #todoContentScroll.matrix-mode #todoMatrix .qitem{touch-action:pan-y}
@@ -1380,7 +1380,7 @@ body,.app{touch-action:pan-x pan-y}
 @media (max-width:430px){
   .topbar{padding-inline:12px!important}
   .brand .logo{gap:6px;font-size:12px}
-  #todoContentScroll.matrix-mode #todoMatrix{--matrix-row-height:240px;grid-template-rows:repeat(2,var(--matrix-row-height))!important;gap:8px!important}
+  #todoContentScroll.matrix-mode #todoMatrix{--matrix-row-height:236px;grid-template-rows:repeat(2,var(--matrix-row-height))!important;gap:8px!important}
   #todoMatrix .quad{min-height:0!important;height:auto!important;padding:10px 8px 8px!important;border-radius:18px!important}
   #todoMatrix .qtop{margin-bottom:6px}
   #todoMatrix .qtop h4{font-size:11.5px}
@@ -1461,7 +1461,7 @@ body,.app{touch-action:pan-x pan-y}
   .screen{padding-top:5px!important;padding-bottom:5px!important}
   .gnb{padding-top:3px!important;padding-bottom:calc(3px + env(safe-area-inset-bottom))!important}.tab{padding-block:3px 2px}.tab svg{width:20px;height:20px}.tab .tl{font-size:9px}
   #todoContentScroll.matrix-mode{overflow-y:auto!important;padding-bottom:64px!important}
-  #todoContentScroll.matrix-mode #todoMatrix{--matrix-row-height:180px;height:auto!important;min-height:0!important;grid-template-rows:repeat(2,var(--matrix-row-height))!important}
+  #todoContentScroll.matrix-mode #todoMatrix{--matrix-row-height:176px;height:auto!important;min-height:0!important;grid-template-rows:repeat(2,var(--matrix-row-height))!important}
   #monthWrap{margin-top:5px}.month .mhead{margin-bottom:2px}.month .mgrid{gap:2px!important}.mdayhead .dn{width:20px;height:20px;font-size:11px}.mdayhead .tdc{display:none}.mbars{margin-top:0}.month-more{height:17px;line-height:15px;font-size:9px}
   #goalWrap{margin:-10px auto 0!important}#goalSvg{height:clamp(145px,28dvh,190px)!important}
   #v-habit .habit-calnav{margin-bottom:6px!important}
@@ -1492,6 +1492,15 @@ body,.app{touch-action:pan-x pan-y}
 
 
 .calendar-todo-badge{display:inline-flex!important;align-items:center;justify-content:center;gap:2px;padding:2px 5px;border-radius:5px;background:#e5e7eb!important;color:#374151!important;font-size:9px!important;line-height:12px!important;white-space:nowrap;min-width:24px}.calendar-todo-badge b{font-size:inherit;font-weight:750}.daychip .eventstat{min-height:16px;display:flex!important;align-items:center;justify-content:center;gap:0;padding-top:2px}.daychip .pip,.daychip .event-count{display:none!important}.mdayhead .tdc{min-height:16px;line-height:16px!important}.daychip.sel .calendar-todo-badge{background:#e5e7eb!important;color:#374151!important}.glabel.sub{display:flex!important;flex-direction:column;align-items:center;gap:1px;line-height:1.1!important}.glabel.sub>span{font-size:3px!important}.glabel.sub strong{font-size:5px!important;font-weight:850}.glabel.sub em{font-size:3px;font-style:normal}.goal-filter-count{display:inline-block;min-width:15px;padding:1px 3px;border-radius:4px;background:var(--border);color:var(--text-2);font-size:10px;margin-left:2px}.goal-filter .on .goal-filter-count{background:var(--accent-soft);color:var(--accent-ink)}
+/* Additional end space remains inside scroll content on mobile Safari. */
+@media(max-width:1024px){
+#v-goal.active{padding-bottom:calc(120px + env(safe-area-inset-bottom))!important;scroll-padding-bottom:150px;overscroll-behavior-y:contain}
+#goalWorkspace::after{content:"";display:block;grid-column:1/-1;height:180px;flex:0 0 auto}
+#habitList,#arcList{padding-bottom:calc(100px + env(safe-area-inset-bottom))!important;scroll-padding-bottom:150px;min-height:0;overscroll-behavior-y:contain}
+#habitList::after,#arcList::after{content:"";display:block;height:140px;flex:0 0 auto;pointer-events:none}
+.app:not(.fullcal) #weekWrap .timeline{height:448px!important;max-height:none!important;flex:none}
+}
+@media(max-width:480px){.app:not(.fullcal) #weekWrap .timeline{height:408px!important;max-height:none!important}}
 </style>
 <div class="clay-blobs" aria-hidden="true"><span class="cb cb1"></span><span class="cb cb2"></span><span class="cb cb3"></span></div>
 
@@ -1721,7 +1730,7 @@ body,.app{touch-action:pan-x pan-y}
     var min=shortLandscape?180:(w<=430?190:220);
     var max=w<=430?300:350;
     var row=Math.max(min,Math.min(max,Math.floor((usable-12)/2)));
-    matrix.style.setProperty("--matrix-row-height",row+"px");
+    matrix.style.setProperty("--matrix-row-height",(row-4)+"px");
   }
   function queueTodoMatrixFit(){requestAnimationFrame(syncTodoMatrixFit);}
   syncAppViewportHeight();
